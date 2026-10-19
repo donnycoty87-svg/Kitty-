@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#240b2b">
+  <meta name="description" content="A tiny neon cat world made just for you.">
+  <title>Moonlit Kitty Club</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap');
+:root{--bg:#19091f;--bg2:#35103d;--panel:rgba(255,255,255,.055);--border:rgba(255,157,230,.22);--pink:#ff55b9;--pink2:#ffb8e6;--text:#ffeafa;--muted:#c79bbf;--shadow:0 0 32px rgba(255,62,183,.13);--mono:'Space Mono',monospace;--sans:'Nunito',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 10%,#49144f 0%,#260d30 43%,var(--bg) 85%);color:var(--text);font-family:var(--sans);overflow-x:hidden;padding:18px 18px 110px}
+body.light-mode{--bg:#fff1fb;--bg2:#f8d7f0;--panel:rgba(255,255,255,.55);--border:rgba(184,54,142,.28);--text:#54264c;--muted:#8d5d83;background:radial-gradient(ellipse at top,#ffe1f5,#f7dafa 55%,#f3e9ff)}
+button,input,select{font:inherit}button{cursor:pointer;color:inherit}.stars{position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(2px 2px at 13% 18%,#ff8ad7 45%,transparent 55%),radial-gradient(1px 1px at 82% 25%,#fff 45%,transparent 55%),radial-gradient(2px 2px at 72% 69%,#ff72ce 45%,transparent 55%),radial-gradient(1px 1px at 30% 82%,#fff 45%,transparent 55%),radial-gradient(1px 1px at 92% 53%,#ffb8e6 45%,transparent 55%);background-size:380px 420px;animation:starsDrift 35s linear infinite}
+@keyframes starsDrift{to{background-position:180px 420px}}@keyframes glow{0%,100%{text-shadow:0 0 12px #ff55b9,0 0 28px #ff55b9}50%{text-shadow:0 0 20px #ff55b9,0 0 45px #ff55b9}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes pop{0%{transform:scale(.85)}70%{transform:scale(1.08)}100%{transform:scale(1)}}@keyframes blink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}@keyframes sparkle{0%{opacity:0;transform:translateY(10px) scale(.5)}50%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.3)}}
+.topbar{max-width:920px;margin:0 auto 22px;display:flex;align-items:center;justify-content:space-between}.brand{font:700 .8rem var(--mono);letter-spacing:.12em;color:var(--pink2);text-decoration:none}.top-actions{display:flex;gap:10px}.icon-btn{border:1px solid var(--border);background:var(--panel);width:42px;height:42px;border-radius:50%;backdrop-filter:blur(10px)}
+main{max-width:700px;margin:auto}.panel{background:var(--panel);border:1px solid var(--border);box-shadow:var(--shadow);backdrop-filter:blur(12px);border-radius:24px}.hero{text-align:center;border:0;background:transparent;box-shadow:none;padding:18px 12px 10px}.avatar-wrap{width:126px;height:126px;margin:0 auto 20px;position:relative}.avatar{height:100%;width:100%;border:4px solid var(--pink);border-radius:50%;background:linear-gradient(135deg,#f9c4e9,#6b2c6d);display:grid;place-items:center;font-size:4.6rem;box-shadow:0 0 22px #ff55b977;animation:float 4s ease-in-out infinite}.online-dot{position:absolute;top:-8px;left:calc(50% - 10px);height:20px;width:20px;background:#82ffc0;border:3px solid #26112c;border-radius:50%;box-shadow:0 0 12px #82ffc0}
+.eyebrow{font: .76rem var(--mono);letter-spacing:.18em;color:var(--muted);margin:0 0 8px}.hero h1{font:700 clamp(2.5rem,8vw,4.5rem)/1.05 var(--mono);margin:0;letter-spacing:.015em;animation:glow 4s ease-in-out infinite}.pink{color:var(--pink)}.heart{color:var(--pink2)}.type-line{font: .9rem var(--mono);color:var(--muted);min-height:25px;margin:12px 0 22px}.cursor{color:var(--pink);animation:blink 1s step-end infinite}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:590px;margin:auto}.stat{border:1px solid var(--border);border-radius:17px;padding:13px 8px;background:var(--panel)}.stat strong{display:block;font:700 1.5rem var(--mono);color:var(--pink2)}.stat span{font: .65rem var(--mono);letter-spacing:.09em;color:var(--muted);display:block;margin-top:4px}
+.section-heading{display:flex;align-items:center;gap:14px;margin:34px 0 12px}.section-heading h2{font:700 .85rem var(--mono);letter-spacing:.18em;color:var(--pink);white-space:nowrap;margin:0}.section-heading>span{height:1px;flex:1;background:linear-gradient(90deg,var(--pink),transparent)}
+.pet-card{padding:20px 18px 17px;text-align:center;position:relative;overflow:hidden}.speech{display:table;margin:0 auto 4px;background:#fff0fb;color:#512348;padding:10px 15px;border-radius:16px;font-weight:800;font-size:.8rem;position:relative;min-width:68px}.speech:after{content:"";position:absolute;bottom:-7px;left:calc(50% - 7px);border-width:8px 7px 0;border-style:solid;border-color:#fff0fb transparent transparent}
+.cat-stage{border:0;background:transparent;width:min(100%,300px);height:245px;display:block;margin:auto;position:relative}.cat{position:relative;width:190px;height:210px;margin:20px auto 0;animation:float 3.4s ease-in-out infinite;filter:drop-shadow(0 8px 12px #ff63bc25)}.cat .body{position:absolute;bottom:0;left:34px;width:122px;height:105px;border-radius:48% 48% 42% 42%;background:#ffd0f0;z-index:1}.face{position:absolute;top:18px;left:23px;width:144px;height:123px;border-radius:47% 47% 48% 48%;background:#ffd0f0;z-index:3}.ear{position:absolute;top:5px;width:0;height:0;border-left:30px solid transparent;border-right:30px solid transparent;border-bottom:52px solid #ffd0f0;z-index:2}.ear:after{content:"";position:absolute;top:14px;left:-14px;border-left:14px solid transparent;border-right:14px solid transparent;border-bottom:26px solid #f47fc9}.ear-left{left:25px;transform:rotate(-17deg)}.ear-right{right:25px;transform:rotate(17deg)}.eye{position:absolute;top:56px;width:19px;height:7px;background:#562449;border-radius:50%;animation:blink 5s infinite}.eye-left{left:35px}.eye-right{right:35px}.blush{position:absolute;top:77px;width:23px;height:13px;background:#ff91ce;border-radius:50%;opacity:.9}.blush-left{left:13px}.blush-right{right:13px}.muzzle{position:absolute;top:76px;left:65px;width:13px;height:9px;background:#b63b86;clip-path:polygon(50% 100%,0 0,100% 0)}.mouth{position:absolute;top:79px;left:64px;font-size:25px;color:#7c285e;line-height:1}.whiskers{position:absolute;top:66px;color:#fff;font-size:25px;letter-spacing:-8px}.whiskers-left{left:-23px;transform:rotate(10deg)}.whiskers-right{right:-16px;transform:rotate(-10deg)}.paw{position:absolute;bottom:-3px;width:43px;height:27px;background:#ffd0f0;border-radius:50%;z-index:4}.paw-left{left:43px}.paw-right{right:43px}.tail{position:absolute;right:-2px;bottom:38px;width:64px;height:83px;border:16px solid #ffd0f0;border-left-color:transparent;border-bottom-color:#ffd0f0;border-radius:50%;transform:rotate(18deg);z-index:0}.zzz{position:absolute;top:2px;right:0;font:700 .85rem var(--mono);color:var(--pink);opacity:0;animation:float 2s infinite}.cat.sleeping .zzz{opacity:1}.cat.happy{animation:wiggle .45s ease-in-out 2}.cat.accessory-bow:before,.cat.accessory-crown:before,.cat.accessory-flower:before,.cat.accessory-star:before{position:absolute;top:9px;right:36px;z-index:8;font-size:30px;filter:drop-shadow(0 0 4px #ff55b9)}.cat.accessory-bow:before{content:"🎀"}.cat.accessory-crown:before{content:"👑"}.cat.accessory-flower:before{content:"🌸"}.cat.accessory-star:before{content:"✨"}
+.pet-name{font: .8rem var(--mono);letter-spacing:.12em;color:var(--muted);margin:0 0 16px}.meters{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:left;margin:0 6px 14px}.meter-label{display:flex;justify-content:space-between;gap:4px;font:.64rem var(--mono);color:var(--muted);margin-bottom:6px}.meter-label b{font-size:.6rem;font-weight:400}.track{height:8px;border-radius:20px;background:#6b315e77;overflow:hidden}.track span{height:100%;display:block;width:60%;border-radius:20px;background:linear-gradient(90deg,#ff69c4,#ed3da5);transition:width .4s ease;box-shadow:0 0 10px #ff55b966}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.pill{border:1px solid #ff8cda88;border-radius:30px;padding:10px 14px;background:rgba(255,87,188,.08);font: .8rem var(--mono);transition:.2s}.pill:hover,.pill:focus-visible{background:#ff55b933;transform:translateY(-2px);box-shadow:0 0 16px #ff55b944}.hint{font:.72rem var(--mono);color:var(--muted);margin:12px 0 16px}.hint.left{text-align:left}.customize{border:1px solid var(--border);border-radius:17px;background:#a83c8720;text-align:left;overflow:hidden}.customize summary{cursor:pointer;list-style:none;padding:14px 16px;font:.8rem var(--mono)}.customize summary::-webkit-details-marker{display:none}.customize summary span{float:right;color:var(--pink)}.customize-fields{padding:0 16px 16px;display:grid;gap:8px}.customize-fields label,.profile-panel label{font:.75rem var(--mono);color:var(--muted)}input,select{min-width:0;width:100%;border:1px solid var(--border);border-radius:12px;background:#210c28aa;color:var(--text);padding:12px;outline:none}input:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px #ff55b91b}option{background:#2c1234}.primary{border:0;border-radius:12px;background:linear-gradient(100deg,#f13da8,#b84bdf);padding:11px 16px;font-weight:800;color:white}.secret-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.secret-card{padding:16px;min-width:0}.secret-icon{font-size:1.6rem}.secret-card h3{font-size:.95rem;margin:10px 0 5px}.secret-card p{font-size:.8rem;color:var(--muted);line-height:1.5}.text-button{padding:0;border:0;background:none;color:var(--pink2);font-weight:800;text-align:left}.muted{color:var(--pink2)}.secret-form,.inline-form{display:flex;gap:7px}.secret-form input{padding:9px;font-size:.78rem}.secret-form button{border:1px solid var(--border);border-radius:10px;background:#ff55b91c;min-width:38px}.small{font-size:.72rem!important;min-height:12px}.profile-panel{padding:18px}.inline-form{margin-top:9px}.inline-form input{flex:1}.dock{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:5px;padding:9px 12px;border:1px solid var(--border);border-radius:40px;background:#210b2aeb;box-shadow:0 0 28px #ff55b92a;backdrop-filter:blur(16px)}.dock a,.dock button{width:42px;height:42px;display:grid;place-items:center;text-decoration:none;border:0;border-radius:50%;background:transparent;font-size:1.15rem;position:relative}.dock .active,.dock a:hover,.dock button:hover{background:#ff55b925}.dock .active:after{content:"";position:absolute;bottom:1px;width:5px;height:5px;background:var(--pink);border-radius:50%}.toast{position:fixed;top:18px;left:50%;transform:translate(-50%,-150%);z-index:20;background:#fff0fb;color:#512348;padding:12px 18px;border-radius:14px;box-shadow:0 8px 30px #0003;transition:transform .3s;font-weight:800;max-width:90vw;text-align:center}.toast.show{transform:translate(-50%,0)}.modal{border:1px solid var(--border);border-radius:24px;background:#2a1033;color:var(--text);width:min(440px,calc(100% - 30px));box-shadow:0 0 50px #ff55b955;padding:28px}.modal::backdrop{background:#0c0610bb;backdrop-filter:blur(6px)}.modal-close{position:absolute;right:14px;top:8px;border:0;background:transparent;font-size:1.8rem;color:var(--pink2)}.modal-content{text-align:center;padding:12px}.modal-content h2{color:var(--pink);font:700 1.1rem var(--mono)}.modal-content p{line-height:1.7;color:var(--muted)}footer{text-align:center;margin:35px auto 0;color:var(--muted);font:.7rem var(--mono)}
+.spark{position:fixed;z-index:15;pointer-events:none;animation:sparkle 1.1s ease-out forwards;font-size:1.3rem}
+@media(max-width:560px){body{padding:12px 12px 100px}.topbar{margin-bottom:12px}.hero{padding-top:10px}.avatar-wrap{width:108px;height:108px}.stats{gap:6px}.stat{padding:11px 4px}.stat strong{font-size:1.25rem}.stat span{font-size:.54rem;letter-spacing:.03em}.pet-card{padding:17px 12px 13px;border-radius:20px}.cat-stage{height:225px}.cat{transform:scale(.92);transform-origin:top center}.meters{gap:7px;margin-left:0;margin-right:0}.meter-label{font-size:.56rem}.meter-label b{display:none}.actions{gap:6px}.pill{padding:9px 10px;font-size:.73rem}.secret-grid{grid-template-columns:1fr}.secret-card{display:grid;grid-template-columns:40px 1fr;column-gap:10px;align-items:center;padding:14px}.secret-icon{grid-row:span 3}.secret-card h3{margin:0}.secret-card p{margin:4px 0}.secret-card .text-button,.secret-form,.small{grid-column:2}.dock{bottom:9px;gap:1px;padding:7px}.dock a,.dock button{width:39px;height:39px} }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+
+</style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Moonlit Kitty Club home">✦ <span>MOONLIT CLUB</span></a>
+    <div class="top-actions">
+      <button class="icon-btn" id="soundToggle" aria-label="Toggle sound" title="Toggle sound">🔇</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Change theme" title="Change theme">🎨</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero panel" id="home">
+      <div class="avatar-wrap">
+        <div class="avatar" aria-label="Cute cat avatar" role="img">🐱</div>
+        <span class="online-dot" title="Online"></span>
+      </div>
+      <p class="eyebrow" id="greeting">GOOD DAY, EXPLORER</p>
+      <h1><span id="profileName">Moonlit</span><br><span class="pink">Kitten</span> <span class="heart">♡</span></h1>
+      <p class="type-line"><span id="typedText">your tiny corner of the internet</span><span class="cursor">▌</span></p>
+      <div class="stats">
+        <div class="stat"><strong id="visitCount">1</strong><span>YOUR VISITS</span></div>
+        <div class="stat"><strong id="petCount">0</strong><span>CAT PETS</span></div>
+        <div class="stat"><strong id="secretCount">0</strong><span>SECRETS FOUND</span></div>
+      </div>
+    </section>
+
+    <section class="section-heading"><h2>MY COMPANION</h2><span></span></section>
+    <section class="pet-card panel" id="companion">
+      <div class="speech" id="speech">Zzz...</div>
+      <button class="cat-stage" id="petCat" aria-label="Pet the cat" title="Tap to pet · hold to purr">
+        <div class="cat" id="cat" role="img" aria-label="Cute animated pink cat">
+          <span class="ear ear-left"></span><span class="ear ear-right"></span>
+          <span class="face">
+            <span class="eye eye-left"></span><span class="eye eye-right"></span>
+            <span class="blush blush-left"></span><span class="blush blush-right"></span>
+            <span class="muzzle"></span><span class="mouth">⌣</span>
+            <span class="whiskers whiskers-left">≋</span><span class="whiskers whiskers-right">≋</span>
+          </span>
+          <span class="body"></span><span class="tail"></span><span class="paw paw-left"></span><span class="paw paw-right"></span>
+          <span class="zzz">z z z</span>
+        </div>
+      </button>
+      <p class="pet-name" id="petNameLabel">~ kitty ~</p>
+      <div class="meters">
+        <div class="meter"><div class="meter-label"><span>HUNGER</span><b id="hungerVal">65%</b></div><div class="track"><span id="hungerBar"></span></div></div>
+        <div class="meter"><div class="meter-label"><span>LOVE</span><b id="loveVal">60%</b></div><div class="track"><span id="loveBar"></span></div></div>
+        <div class="meter"><div class="meter-label"><span>ENERGY</span><b id="energyVal">80%</b></div><div class="track"><span id="energyBar"></span></div></div>
+      </div>
+      <div class="actions">
+        <button class="pill" data-action="feed">🐟 Feed</button>
+        <button class="pill" data-action="play">🧶 Play</button>
+        <button class="pill" data-action="nap">💤 Nap</button>
+        <button class="pill" data-action="blink">😌 Slow blink</button>
+      </div>
+      <p class="hint">tap to pet · hold to purr · care for your tiny friend</p>
+      <details class="customize">
+        <summary>🎀 dress up &amp; name your cat <span>＋</span></summary>
+        <div class="customize-fields">
+          <label for="nameInput">Cat's name</label>
+          <input id="nameInput" maxlength="18" placeholder="e.g. Mochi">
+          <label for="accessory">Accessory</label>
+          <select id="accessory">
+            <option value="none">No accessory</option><option value="bow">Pink bow 🎀</option>
+            <option value="crown">Tiny crown 👑</option><option value="flower">Flower 🌸</option>
+            <option value="star">Star ✨</option>
+          </select>
+          <button class="primary" id="saveCat">Save look</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="section-heading"><h2>SECRET CORNER</h2><span></span></section>
+    <section class="secret-grid">
+      <article class="secret-card panel">
+        <div class="secret-icon">💌</div><h3>A tiny message</h3>
+        <p>There's a little note hidden just for curious visitors.</p>
+        <button class="text-button" id="noteButton">Open the note ↗</button>
+      </article>
+      <article class="secret-card panel">
+        <div class="secret-icon">🌙</div><h3>Moonlight wish</h3>
+        <p>Make a wish and let it float into the stars.</p>
+        <button class="text-button" id="wishButton">Make a wish ✧</button>
+      </article>
+      <article class="secret-card panel">
+        <div class="secret-icon">🔐</div><h3>Secret word</h3>
+        <p>Try the magic word: <span class="muted">kittylove</span></p>
+        <div class="secret-form"><input id="secretInput" placeholder="Enter secret word" autocomplete="off"><button id="unlockButton" aria-label="Unlock secret">↗</button></div>
+        <p class="small" id="secretFeedback" aria-live="polite"></p>
+      </article>
+    </section>
+
+    <section class="section-heading"><h2>YOUR LITTLE SPACE</h2><span></span></section>
+    <section class="panel profile-panel">
+      <label for="visitorName">What should I call you?</label>
+      <div class="inline-form"><input id="visitorName" maxlength="24" placeholder="Your nickname"><button class="primary" id="saveVisitor">Save</button></div>
+      <p class="hint left">Your pet's progress and nickname are saved on this device using local storage.</p>
+    </section>
+  </main>
+
+  <nav class="dock" aria-label="Main navigation">
+    <a href="#home" title="Home">🏠</a><a href="#companion" class="active" title="Cat">🐱</a>
+    <a href="#secret-corner" id="navNote" title="Messages">💌</a><a href="#secret-corner" id="navCamera" title="Memories">📸</a>
+    <button id="sparkleButton" title="Sparkle burst" aria-label="Sparkle burst">🎮</button><button id="randomSecret" title="Surprise" aria-label="Surprise">🔗</button>
+  </nav>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="modal" class="modal">
+    <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+    <div class="modal-content" id="modalContent"></div>
+  </dialog>
+  <footer>made with ♡, stardust &amp; a very tiny cat <span id="year"></span></footer>
+  <script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const defaults = {visits:0,pets:0,secrets:[],hunger:65,love:60,energy:80,catName:"kitty",accessory:"none",visitor:"",theme:"dark",sound:false,lastSeen:Date.now()};
+  let state = {...defaults};
+  try { state = {...defaults, ...JSON.parse(localStorage.getItem("moonlitKittySave") || "{}")}; } catch {}
+  state.visits = Math.max(1, Number(state.visits || 0) + 1);
+  const save = () => { try { localStorage.setItem("moonlitKittySave", JSON.stringify(state)); } catch {} };
+  let toastTimer;
+  function toast(message) {
+    const el = $("toast"); el.textContent = message; el.classList.add("show");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove("show"), 2300);
+  }
+  function modal(title, body) {
+    $("modalContent").innerHTML = `<h2>${title}</h2>${body}`;
+    const d = $("modal");
+    if (typeof d.showModal === "function") d.showModal(); else alert(title + "\\n" + body.replace(/<[^>]*>/g,""));
+  }
+  function setSecret(key) {
+    if (!state.secrets.includes(key)) { state.secrets.push(key); toast("Secret discovered! ✨"); }
+    update(); save();
+  }
+  function update() {
+    $("visitCount").textContent = state.visits;
+    $("petCount").textContent = state.pets;
+    $("secretCount").textContent = state.secrets.length;
+    $("petNameLabel").textContent = `~ ${state.catName || "kitty"} ~`;
+    $("hungerVal").textContent = state.hunger + "%"; $("hungerBar").style.width = state.hunger + "%";
+    $("loveVal").textContent = state.love + "%"; $("loveBar").style.width = state.love + "%";
+    $("energyVal").textContent = state.energy + "%"; $("energyBar").style.width = state.energy + "%";
+    $("nameInput").value = state.catName === "kitty" ? "" : state.catName;
+    $("accessory").value = state.accessory;
+    $("cat").className = `cat accessory-${state.accessory}`;
+    $("visitorName").value = state.visitor || "";
+    document.body.classList.toggle("light-mode", state.theme === "light");
+    $("themeToggle").textContent = state.theme === "light" ? "🌙" : "🎨";
+    $("soundToggle").textContent = state.sound ? "🔔" : "🔇";
+  }
+  const clamp = n => Math.max(0, Math.min(100, n));
+  function act(action) {
+    const cat = $("cat"), speech = $("speech");
+    cat.classList.remove("sleeping","happy");
+    if (action === "feed") {
+      if (state.hunger >= 95) { toast("Your kitty is already full! 🐟"); return; }
+      state.hunger = clamp(state.hunger + 22); state.love = clamp(state.love + 3); speech.textContent = "Yum yum!"; toast("Your kitty enjoyed the snack 🐟");
+    } else if (action === "play") {
+      if (state.energy < 15) { speech.textContent = "Too sleepy..."; toast("Your kitty needs a nap first 💤"); return; }
+      state.love = clamp(state.love + 12); state.hunger = clamp(state.hunger - 8); state.energy = clamp(state.energy - 18); cat.classList.add("happy"); speech.textContent = "Wheee!"; toast("Playtime! Your kitty is happy 🧶");
+    } else if (action === "nap") {
+      state.energy = clamp(state.energy + 28); state.hunger = clamp(state.hunger - 4); cat.classList.add("sleeping"); speech.textContent = "Zzz..."; toast("Sweet dreams, little kitty 🌙");
+    } else if (action === "blink") {
+      state.love = clamp(state.love + 8); speech.textContent = "♡ blink ♡"; cat.classList.add("happy"); toast("Your kitty slow-blinks back 💗");
+    } else if (action === "pet") {
+      state.pets += 1; state.love = clamp(state.love + 2); speech.textContent = ["Purr purr!","More pets, please!","You are my favourite human!","♡ purrrrr ♡"][Math.floor(Math.random()*4)];
+      cat.classList.add("happy"); if (state.pets === 10) setSecret("pet10"); else { update(); save(); }
+      sparkleAt($("petCat"));
+    }
+    update(); save();
+  }
+  function sparkleAt(target) {
+    const r = target.getBoundingClientRect();
+    for (let i=0;i<7;i++) {
+      const s=document.createElement("span"); s.className="spark"; s.textContent=["✦","♡","✧","✨"][i%4];
+      s.style.left=(r.left+Math.random()*r.width)+"px"; s.style.top=(r.top+r.height*.35+Math.random()*50)+"px";
+      s.style.color=["#ff70cb","#fff0fb","#c6a0ff"][i%3]; document.body.appendChild(s); setTimeout(()=>s.remove(),1200);
+    }
+  }
+  $("year").textContent = "· " + new Date().getFullYear();
+  const hour = new Date().getHours();
+  $("greeting").textContent = (hour < 12 ? "GOOD MORNING" : hour < 18 ? "GOOD AFTERNOON" : "GOOD EVENING") + ", EXPLORER";
+  const typed = ["your tiny corner of the internet","admin of my own little universe","made of moonlight & cat fur","stay soft, stay magical"];
+  let ti=0, ci=0, deleting=false;
+  function typeLoop() {
+    const phrase=typed[ti]; ci += deleting ? -1 : 1;
+    $("typedText").textContent=phrase.slice(0,ci);
+    if (!deleting && ci===phrase.length) { deleting=true; setTimeout(typeLoop,1300); return; }
+    if (deleting && ci===0) { deleting=false; ti=(ti+1)%typed.length; }
+    setTimeout(typeLoop,deleting?35:65);
+  }
+  typeLoop();
+  document.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",()=>act(b.dataset.action)));
+  $("petCat").addEventListener("click",()=>act("pet"));
+  let holdTimer;
+  $("petCat").addEventListener("pointerdown",()=>{holdTimer=setTimeout(()=>{ $("speech").textContent="purrrrrrrrr ♡"; toast("Purr mode activated 💗"); },550);});
+  ["pointerup","pointerleave","pointercancel"].forEach(ev=>$("petCat").addEventListener(ev,()=>clearTimeout(holdTimer)));
+  $("saveCat").addEventListener("click",()=>{
+    const name=$("nameInput").value.trim();
+    state.catName=name.slice(0,18)||"kitty"; state.accessory=$("accessory").value;
+    update(); save(); toast("Your kitty's new look is saved! 🎀");
+  });
+  $("saveVisitor").addEventListener("click",()=>{
+    state.visitor=$("visitorName").value.trim().slice(0,24); $("profileName").textContent=state.visitor||"Moonlit";
+    save(); toast(state.visitor?`Welcome back, ${state.visitor}! ♡`:"Nickname cleared.");
+  });
+  $("visitorName").addEventListener("input",()=>{$("profileName").textContent=$("visitorName").value.trim().slice(0,24)||"Moonlit";});
+  $("themeToggle").addEventListener("click",()=>{state.theme=state.theme==="dark"?"light":"dark";update();save();toast("A little colour change ✨");});
+  $("soundToggle").addEventListener("click",()=>{state.sound=!state.sound;update();save();toast(state.sound?"Sound preference on (no audio file needed)":"Sound preference off");});
+  $("noteButton").addEventListener("click",()=>{setSecret("note");modal("A tiny note 💌","<p>Hey, you found this little corner of the internet. Whatever kind of day you are having, you deserve a moment of calm, a little kindness, and something that makes you smile.</p><p>— a message from the moonlit kitty ♡</p>");});
+  $("wishButton").addEventListener("click",()=>{setSecret("wish");sparkleAt($("wishButton"));modal("Make a wish 🌙","<p>Close your eyes for a moment and think of one good thing you want to work toward.</p><p><strong>Wish made. Keep one tiny step between you and that dream. ✨</strong></p>");});
+  $("unlockButton").addEventListener("click",()=>{
+    const val=$("secretInput").value.trim().toLowerCase();
+    if(val==="kittylove"){setSecret("word");modal("Unlocked! 🔓","<p>You found the hidden message!</p><p>🌸 You are paws-itively amazing. Keep being your own kind of magic. ♡</p>");$("secretFeedback").textContent="Secret unlocked! ✨";}
+    else {$("secretFeedback").textContent="Not quite… try the magic word.";toast("The secret word is hiding in plain sight 👀");}
+  });
+  $("secretInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("unlockButton").click();});
+  $("sparkleButton").addEventListener("click",()=>{sparkleAt(document.querySelector(".hero"));toast("A little burst of stardust! ✨");});
+  $("randomSecret").addEventListener("click",()=>{
+    const surprises=["You are someone's favourite notification. ♡","Tiny steps still move you forward. 🌙","Officially certified: 100% pawsome. 🐾","The universe is rooting for you. ✨"];
+    modal("A surprise for you ✧",`<p>${surprises[Math.floor(Math.random()*surprises.length)]}</p>`);
+    setSecret("surprise");
+  });
+  $("navNote").addEventListener("click",e=>{e.preventDefault();$("noteButton").click();});
+  $("navCamera").addEventListener("click",e=>{e.preventDefault();modal("Memory album 📸","<p>Your little memories live here. Take a screenshot of your favourite kitty moment and keep it safe on your device. ♡</p>");});
+  $("closeModal").addEventListener("click",()=>$("modal").close());
+  $("modal").addEventListener("click",e=>{if(e.target===$("modal"))$("modal").close();});
+  // Gentle passive needs decay while the page is open.
+  setInterval(()=>{state.hunger=clamp(state.hunger-1);state.energy=clamp(state.energy-1);update();save();},60000);
+  update();
+  if(state.visits===1) toast("Welcome to your tiny universe ✨");
+  if(state.pets>=10 && !state.secrets.includes("pet10")) setSecret("pet10");
+  save();
+})(); 
+
+</script>
+</body>
+</html>
